@@ -52,9 +52,7 @@ function ThreeRenderer() {
     controls.enableDamping = true;
 
     const dracoLoader = new DRACOLoader();
-    dracoLoader.setDecoderPath(
-      "https://www.gstatic.com/draco/v1/decoders/"
-    );
+    dracoLoader.setDecoderPath("https://www.gstatic.com/draco/v1/decoders/");
 
     const loader = new GLTFLoader();
     loader.setDRACOLoader(dracoLoader);

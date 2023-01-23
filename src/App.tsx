@@ -1,4 +1,3 @@
-import React from "react";
 import ThreeRenderer from "./renderer";
 
 import "./App.css";
