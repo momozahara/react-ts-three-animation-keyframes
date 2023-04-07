@@ -51,6 +51,7 @@ function ThreeRenderer() {
     controls.update();
     controls.enablePan = false;
     controls.enableDamping = true;
+    controls.enableZoom = false;
 
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath("https://www.gstatic.com/draco/v1/decoders/");
