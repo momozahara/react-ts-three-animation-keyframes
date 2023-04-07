@@ -45,5 +45,7 @@
       }
     ]
   },
-  "ignorePatterns": []
+  "ignorePatterns": [
+    "*.config.js"
+  ]
 }

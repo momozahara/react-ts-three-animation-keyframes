@@ -1,13 +1,15 @@
-body, html {
-  margin: 0;
-  padding: 0;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-body {
-  background-color: #bfe3dd;
-  color: #000;
-}
+@layer base {
+  body, html {
+    @apply p-0 m-0;
+  }
 
-a {
-  color: #2983ff;
+  body {
+    @apply bg-[#bfe3dd];
+    @apply text-black;
+  }
+
 }

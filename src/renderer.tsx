@@ -18,13 +18,14 @@ function ThreeRenderer() {
     const container = document.getElementById("container");
 
     const stats = Stats();
+    stats.dom.id = "stats";
     container?.append(stats.dom);
 
     const renderer = new THREE.WebGL1Renderer({
       antialias: true,
     });
     renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(window.innerWidth, window.innerHeight / 2);
     renderer.outputEncoding = THREE.sRGBEncoding;
     container?.appendChild(renderer.domElement);
 
@@ -39,7 +40,7 @@ function ThreeRenderer() {
 
     const camera = new THREE.PerspectiveCamera(
       40,
-      window.innerWidth / window.innerHeight,
+      window.innerWidth / (window.innerHeight / 2),
       1,
       100
     );
@@ -76,10 +77,10 @@ function ThreeRenderer() {
     );
 
     window.onresize = function () {
-      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.aspect = window.innerWidth / (window.innerHeight / 2);
       camera.updateProjectionMatrix();
 
-      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setSize(window.innerWidth, window.innerHeight / 2);
     };
 
     function animate() {
