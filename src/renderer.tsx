@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 
 import * as THREE from "three";
 
@@ -10,8 +10,20 @@ import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 
-function ThreeRenderer() {
+interface RendererProps {
+  statsHidden?: boolean,
+  controlsPan?: boolean,
+  controlsDamping?: boolean,
+  controlsZoom?: boolean,
+}
+
+function ThreeRenderer(props: RendererProps) {
+  const statsRef = useRef<Stats>();
+  const controlsRef = useRef<OrbitControls>();
+
   useEffect(() => {
+    let domHeightDivisor = 1.37;
+
     let mixer: THREE.AnimationMixer;
 
     const clock = new THREE.Clock();
@@ -21,11 +33,13 @@ function ThreeRenderer() {
     stats.dom.id = "stats";
     container?.append(stats.dom);
 
+    statsRef.current = stats;
+
     const renderer = new THREE.WebGL1Renderer({
       antialias: true,
     });
     renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(window.innerWidth, window.innerHeight / 2);
+    renderer.setSize(window.innerWidth, window.innerHeight / domHeightDivisor);
     renderer.outputEncoding = THREE.sRGBEncoding;
     container?.appendChild(renderer.domElement);
 
@@ -40,7 +54,7 @@ function ThreeRenderer() {
 
     const camera = new THREE.PerspectiveCamera(
       40,
-      window.innerWidth / (window.innerHeight / 2),
+      window.innerWidth / (window.innerHeight / domHeightDivisor),
       1,
       100
     );
@@ -49,9 +63,11 @@ function ThreeRenderer() {
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.target.set(0, 0.5, 0);
     controls.update();
-    controls.enablePan = false;
-    controls.enableDamping = true;
-    controls.enableZoom = false;
+    controls.enablePan = props.controlsPan || false;
+    controls.enableDamping = props.controlsDamping || true;
+    controls.enableZoom = props.controlsZoom || false;
+
+    controlsRef.current = controls;
 
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath("https://www.gstatic.com/draco/v1/decoders/");
@@ -78,10 +94,10 @@ function ThreeRenderer() {
     );
 
     window.onresize = function () {
-      camera.aspect = window.innerWidth / (window.innerHeight / 2);
+      camera.aspect = window.innerWidth / (window.innerHeight / domHeightDivisor);
       camera.updateProjectionMatrix();
 
-      renderer.setSize(window.innerWidth, window.innerHeight / 2);
+      renderer.setSize(window.innerWidth, window.innerHeight / domHeightDivisor);
     };
 
     function animate() {
@@ -98,6 +114,27 @@ function ThreeRenderer() {
       renderer.render(scene, camera);
     }
   }, []);
+
+  useEffect(() => {
+    if (statsRef && statsRef.current) {
+      if (props.statsHidden !== undefined) {
+        statsRef.current.dom.hidden = props.statsHidden;
+      }
+    }
+
+    if (controlsRef && controlsRef.current) {
+      if (props.controlsDamping !== undefined) {
+        controlsRef.current.enableDamping = props.controlsDamping;
+      }
+      if (props.controlsPan !== undefined) {
+        controlsRef.current.enablePan = props.controlsPan;
+      }
+      if (props.controlsZoom !== undefined) {
+        controlsRef.current.enableZoom = props.controlsZoom;
+      }
+    }
+
+  }, [props.statsHidden, props.controlsDamping, props.controlsPan, props.controlsZoom]);
 
   return <></>;
 }
