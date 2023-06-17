@@ -11,10 +11,10 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 
 interface RendererProps {
-  statsHidden?: boolean,
-  controlsPan?: boolean,
-  controlsDamping?: boolean,
-  controlsZoom?: boolean,
+  statsHidden?: boolean;
+  controlsPan?: boolean;
+  controlsDamping?: boolean;
+  controlsZoom?: boolean;
 }
 
 function ThreeRenderer(props: RendererProps) {
@@ -22,7 +22,7 @@ function ThreeRenderer(props: RendererProps) {
   const controlsRef = useRef<OrbitControls>();
 
   useEffect(() => {
-    let domHeightDivisor = 1.37;
+    let domHeightDivisor = 1;
 
     let mixer: THREE.AnimationMixer;
 
@@ -61,7 +61,7 @@ function ThreeRenderer(props: RendererProps) {
     camera.position.set(5, 2, 8);
 
     const controls = new OrbitControls(camera, renderer.domElement);
-    controls.target.set(0, 0.5, 0);
+    controls.target.set(0, 0, 0);
     controls.update();
     controls.enablePan = props.controlsPan || false;
     controls.enableDamping = props.controlsDamping || true;
@@ -94,10 +94,14 @@ function ThreeRenderer(props: RendererProps) {
     );
 
     window.onresize = function () {
-      camera.aspect = window.innerWidth / (window.innerHeight / domHeightDivisor);
+      camera.aspect =
+        window.innerWidth / (window.innerHeight / domHeightDivisor);
       camera.updateProjectionMatrix();
 
-      renderer.setSize(window.innerWidth, window.innerHeight / domHeightDivisor);
+      renderer.setSize(
+        window.innerWidth,
+        window.innerHeight / domHeightDivisor
+      );
     };
 
     function animate() {
@@ -133,8 +137,12 @@ function ThreeRenderer(props: RendererProps) {
         controlsRef.current.enableZoom = props.controlsZoom;
       }
     }
-
-  }, [props.statsHidden, props.controlsDamping, props.controlsPan, props.controlsZoom]);
+  }, [
+    props.statsHidden,
+    props.controlsDamping,
+    props.controlsPan,
+    props.controlsZoom,
+  ]);
 
   return <></>;
 }
