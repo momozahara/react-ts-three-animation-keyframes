@@ -31,7 +31,11 @@ function App() {
             <section className="w-full border-b border-black mb-4">
               <h1 className="font-bold text-xl mx-2 inline">Three.JS</h1>
               <h2 className="inline">
-                <a href="https://github.com/momozahara/react-ts-three-animation-keyframes">
+                <a
+                  href="https://github.com/momozahara/react-ts-three-animation-keyframes"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   Github
                 </a>
               </h2>
