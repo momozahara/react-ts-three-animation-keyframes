@@ -24,7 +24,7 @@ function ThreeRenderer(props: RendererProps) {
   useEffect(() => {
     let domHeightDivisor = 1;
 
-    let mixer: THREE.AnimationMixer;
+    let mixer: THREE.AnimationMixer[] = [];
 
     const clock = new THREE.Clock();
     const container = document.getElementById("container");
@@ -82,10 +82,28 @@ function ThreeRenderer(props: RendererProps) {
         model.scale.set(0.01, 0.01, 0.01);
         scene.add(model);
 
-        mixer = new THREE.AnimationMixer(model);
-        mixer.clipAction(gltf.animations[0]).play();
+        const _mixer = new THREE.AnimationMixer(model);
+        _mixer.clipAction(gltf.animations[0]).play();
 
-        animate();
+        mixer.push(_mixer);
+      },
+      undefined,
+      function (e) {
+        console.error(e);
+      }
+    );
+    loader.load(
+      "/LittlestTokyo.glb",
+      function (gltf) {
+        const model = gltf.scene;
+        model.position.set(3.5, -0.8, 2);
+        model.scale.set(0.001, 0.001, 0.001);
+        scene.add(model);
+
+        const _mixer = new THREE.AnimationMixer(model);
+        _mixer.clipAction(gltf.animations[0]).play();
+
+        mixer.push(_mixer);
       },
       undefined,
       function (e) {
@@ -104,12 +122,16 @@ function ThreeRenderer(props: RendererProps) {
       );
     };
 
+    animate();
+
     function animate() {
       requestAnimationFrame(animate);
 
       const delta = clock.getDelta();
 
-      mixer.update(delta);
+      mixer.forEach((_mixer) => {
+        _mixer.update(delta);
+      });
 
       controls.update();
 
