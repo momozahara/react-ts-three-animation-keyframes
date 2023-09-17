@@ -5,26 +5,28 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "yarn lint && tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint **/*.{js,jsx,ts,tsx}"
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx,.json src/"
   },
   "dependencies": {
-    "@types/three": "^0.146.0",
-    "@typescript-eslint/parser": "^5.45.0",
-    "eslint": "^8.28.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-react": "^7.31.11",
-    "prettier": "^2.8.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "three": "^0.146.0",
-    "vite-tsconfig-paths": "^3.6.0"
+    "three": "^0.146.0"
   },
   "devDependencies": {
+    "vite-tsconfig-paths": "^3.6.0",
+    "eslint": "^8.49.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-react": "^7.33.2",
+    "prettier": "^3.0.3",
+    "@types/three": "^0.146.0",
+    "@types/eslint": "^8.44.2",
     "@types/react": "^18.0.24",
     "@types/react-dom": "^18.0.8",
+    "@typescript-eslint/parser": "^6.7.0",
+    "@typescript-eslint/eslint-plugin": "^6.7.0",
     "@vitejs/plugin-react": "^2.2.0",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.21",

@@ -22,9 +22,9 @@ function ThreeRenderer(props: RendererProps) {
   const controlsRef = useRef<OrbitControls>();
 
   useEffect(() => {
-    let domHeightDivisor = 1;
+    const domHeightDivisor = 1;
 
-    let mixer: THREE.AnimationMixer[] = [];
+    const mixer: THREE.AnimationMixer[] = [];
 
     const clock = new THREE.Clock();
     const container = document.getElementById("container");
@@ -49,23 +49,23 @@ function ThreeRenderer(props: RendererProps) {
     scene.background = new THREE.Color(0xbfe3dd);
     scene.environment = pmremGenerator.fromScene(
       new RoomEnvironment(),
-      0.04
+      0.04,
     ).texture;
 
     const camera = new THREE.PerspectiveCamera(
       40,
       window.innerWidth / (window.innerHeight / domHeightDivisor),
       1,
-      100
+      100,
     );
     camera.position.set(5, 2, 8);
 
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.target.set(0, 0, 0);
     controls.update();
-    controls.enablePan = props.controlsPan || false;
-    controls.enableDamping = props.controlsDamping || true;
-    controls.enableZoom = props.controlsZoom || false;
+    controls.enablePan = props.controlsPan ?? false;
+    controls.enableDamping = props.controlsDamping ?? true;
+    controls.enableZoom = props.controlsZoom ?? false;
 
     controlsRef.current = controls;
 
@@ -90,7 +90,7 @@ function ThreeRenderer(props: RendererProps) {
       undefined,
       function (e) {
         console.error(e);
-      }
+      },
     );
     loader.load(
       "/LittlestTokyo.glb",
@@ -108,7 +108,7 @@ function ThreeRenderer(props: RendererProps) {
       undefined,
       function (e) {
         console.error(e);
-      }
+      },
     );
 
     window.onresize = function () {
@@ -118,7 +118,7 @@ function ThreeRenderer(props: RendererProps) {
 
       renderer.setSize(
         window.innerWidth,
-        window.innerHeight / domHeightDivisor
+        window.innerHeight / domHeightDivisor,
       );
     };
 
@@ -142,13 +142,13 @@ function ThreeRenderer(props: RendererProps) {
   }, []);
 
   useEffect(() => {
-    if (statsRef && statsRef.current) {
+    if (statsRef?.current) {
       if (props.statsHidden !== undefined) {
         statsRef.current.dom.hidden = props.statsHidden;
       }
     }
 
-    if (controlsRef && controlsRef.current) {
+    if (controlsRef?.current) {
       if (props.controlsDamping !== undefined) {
         controlsRef.current.enableDamping = props.controlsDamping;
       }
