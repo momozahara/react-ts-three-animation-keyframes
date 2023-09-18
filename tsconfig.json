@@ -26,7 +26,6 @@
     "*.cjs",
     ".*.cjs",
     "vite.config.ts",
-    "package.json",
   ],
   "references": [
     {
