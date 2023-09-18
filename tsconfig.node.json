@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
     "composite": true,
     "module": "ESNext",
     "moduleResolution": "Node",
@@ -8,7 +7,6 @@
     "resolveJsonModule": true
   },
   "include": [
-    "package.json",
     "vite.config.ts"
   ]
 }

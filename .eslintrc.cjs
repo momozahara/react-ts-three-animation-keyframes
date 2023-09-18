@@ -2,8 +2,8 @@
 const config = {
   settings: {
     react: {
-      version: "detect"
-    }
+      version: "detect",
+    },
   },
   parser: "@typescript-eslint/parser",
   parserOptions: {
