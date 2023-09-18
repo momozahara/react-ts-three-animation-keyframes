@@ -1,6 +1,15 @@
 import React, { useEffect, useRef } from "react";
 
-import * as THREE from "three";
+import {
+  AnimationMixer,
+  Clock,
+  Color,
+  PerspectiveCamera,
+  PMREMGenerator,
+  Scene,
+  sRGBEncoding,
+  WebGL1Renderer,
+} from "three";
 
 import Stats from "three/examples/jsm/libs/stats.module";
 
@@ -26,7 +35,7 @@ function ThreeRenderer(props: RendererProps) {
 
     const mixer: THREE.AnimationMixer[] = [];
 
-    const clock = new THREE.Clock();
+    const clock = new Clock();
     const container = document.getElementById("container");
 
     const stats = Stats();
@@ -35,24 +44,24 @@ function ThreeRenderer(props: RendererProps) {
 
     statsRef.current = stats;
 
-    const renderer = new THREE.WebGL1Renderer({
+    const renderer = new WebGL1Renderer({
       antialias: true,
     });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight / domHeightDivisor);
-    renderer.outputEncoding = THREE.sRGBEncoding;
+    renderer.outputEncoding = sRGBEncoding;
     container?.appendChild(renderer.domElement);
 
-    const pmremGenerator = new THREE.PMREMGenerator(renderer);
+    const pmremGenerator = new PMREMGenerator(renderer);
 
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xbfe3dd);
+    const scene = new Scene();
+    scene.background = new Color(0xbfe3dd);
     scene.environment = pmremGenerator.fromScene(
       new RoomEnvironment(),
       0.04,
     ).texture;
 
-    const camera = new THREE.PerspectiveCamera(
+    const camera = new PerspectiveCamera(
       40,
       window.innerWidth / (window.innerHeight / domHeightDivisor),
       1,
@@ -82,7 +91,7 @@ function ThreeRenderer(props: RendererProps) {
         model.scale.set(0.01, 0.01, 0.01);
         scene.add(model);
 
-        const _mixer = new THREE.AnimationMixer(model);
+        const _mixer = new AnimationMixer(model);
         _mixer.clipAction(gltf.animations[0]).play();
 
         mixer.push(_mixer);
@@ -100,7 +109,7 @@ function ThreeRenderer(props: RendererProps) {
         model.scale.set(0.001, 0.001, 0.001);
         scene.add(model);
 
-        const _mixer = new THREE.AnimationMixer(model);
+        const _mixer = new AnimationMixer(model);
         _mixer.clipAction(gltf.animations[0]).play();
 
         mixer.push(_mixer);

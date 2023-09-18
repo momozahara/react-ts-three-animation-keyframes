@@ -1,7 +1,7 @@
-import ThreeRenderer from "./renderer";
-
-import "./App.css";
 import { useState } from "react";
+
+import ThreeRenderer from "./renderer";
+import "./App.css";
 
 function App() {
   const [statsHidden, setStatsHidden] = useState(false);
