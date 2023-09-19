@@ -23,9 +23,9 @@
   },
   "include": [
     "src",
-    "*.cjs",
-    ".*.cjs",
     "vite.config.ts",
+    ".eslintrc.cjs",
+    "**/*.cjs",
   ],
   "references": [
     {
