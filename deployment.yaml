@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: pcode-three-deployment
+  namespace: pcode
+  labels:
+    app: pcode-three
+
+spec:
+  selector:
+    matchLabels:
+      app: pcode-three
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: pcode-three
+    spec:
+      containers:
+      - name: pcode-three-image
+        image: ghcr.io/momozahara/pcode-three:1.0.0
+        imagePullPolicy: Always
+        ports:
+          -  containerPort: 3000
+      imagePullSecrets:
+      - name: ghcr
