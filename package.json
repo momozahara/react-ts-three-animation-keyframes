@@ -1,11 +1,11 @@
 {
   "name": "pcode-three",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "yarn lint && tsc && vite build",
+    "build": "pnpm run lint && tsc && vite build",
     "preview": "vite preview",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx,.json src/"
   },

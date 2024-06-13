@@ -1,26 +1,23 @@
-FROM node:16.17-alpine as base
-
-RUN yarn global add pnpm
-
-FROM base as dependencies
-
+FROM node:20-alpine AS base
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
+COPY . /app
 WORKDIR /app
 
-COPY package.json pnpm-lock.yaml ./
-RUN pnpm install
-
-FROM base as builder
-
+FROM base AS dep
 WORKDIR /app
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 
-COPY . .
-COPY --from=dependencies /app/node_modules ./node_modules
-RUN pnpm build
+FROM base AS build
+WORKDIR /app
+COPY --from=dep /app/node_modules ./node_modules
+RUN pnpm run build
 
 FROM nginx:alpine
 
 WORKDIR /usr/share/nginx/html
 
-COPY --from=builder /app/dist .
+COPY --from=build /app/dist .
 
 CMD [ "nginx", "-g", "daemon off;" ]
