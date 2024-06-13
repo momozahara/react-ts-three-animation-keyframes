@@ -6,11 +6,9 @@ COPY . /app
 WORKDIR /app
 
 FROM base AS dep
-WORKDIR /app
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 
 FROM base AS build
-WORKDIR /app
 COPY --from=dep /app/node_modules ./node_modules
 RUN pnpm run build
 
