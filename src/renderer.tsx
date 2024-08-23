@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 import {
   AnimationMixer,
@@ -6,18 +6,17 @@ import {
   Color,
   PerspectiveCamera,
   PMREMGenerator,
+  WebGLRenderer,
   Scene,
-  sRGBEncoding,
-  WebGL1Renderer,
 } from "three";
 
-import Stats from "three/examples/jsm/libs/stats.module";
+import Stats from "three/addons/libs/stats.module.js";
 
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
 
 interface RendererProps {
   statsHidden?: boolean;
@@ -33,23 +32,22 @@ function ThreeRenderer(props: RendererProps) {
   useEffect(() => {
     const domHeightDivisor = 1;
 
-    const mixer: THREE.AnimationMixer[] = [];
+    const mixer: AnimationMixer[] = [];
 
     const clock = new Clock();
     const container = document.getElementById("container");
 
-    const stats = Stats();
+    const stats = new Stats();
     stats.dom.id = "stats";
     container?.append(stats.dom);
 
     statsRef.current = stats;
 
-    const renderer = new WebGL1Renderer({
+    const renderer = new WebGLRenderer({
       antialias: true,
     });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight / domHeightDivisor);
-    renderer.outputEncoding = sRGBEncoding;
     container?.appendChild(renderer.domElement);
 
     const pmremGenerator = new PMREMGenerator(renderer);
@@ -148,6 +146,7 @@ function ThreeRenderer(props: RendererProps) {
 
       renderer.render(scene, camera);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
