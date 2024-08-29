@@ -14,5 +14,6 @@ RUN pnpm run build
 
 FROM nginx:alpine
 WORKDIR /usr/share/nginx/html
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/dist .
 CMD [ "nginx", "-g", "daemon off;" ]
