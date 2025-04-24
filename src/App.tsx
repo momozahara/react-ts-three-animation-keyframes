@@ -33,7 +33,7 @@ function App() {
                 <h1 className="font-bold text-xl mx-2 inline">Three.JS</h1>
                 <h2 className="inline text-lg">
                   <a
-                    href="https://github.com/momozahara/react-ts-three-animation-keyframes"
+                    href="https://github.com/preampinbut/react-ts-three-animation-keyframes"
                     target="_blank"
                     rel="noreferrer"
                   >
